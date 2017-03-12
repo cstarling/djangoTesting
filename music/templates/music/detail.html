@@ -1,26 +1,19 @@
-<h1>{{ album.artist_title}}</h1>
-<h3>{{ album.artist}}</h3>
+{% extends 'music/base.html' %}
 
-{% if error_message %}
-    <p><strong>{{ error_message }} </strong></p>
-{% endif %}
+{% block title%} Details {% endblock %}
+{% block body%}
+    <h1>{{ album.artist_title}}</h1>
+    <h3>{{ album.artist}}</h3>
 
-
-
-<form action="{% url 'music:favorite' album.id %}" method="post">
-    {% csrf_token %}
-
+<ul>
     {% for song in album.song_set.all%}
-        <input type="radio" id="song{{ forloop.counter }}" name="song" value="{{ song.id }}"/>
-        <label for="song{{ forloop.counter }}">
-            {{ song.song_title }}
-        </label>
-
-    {% if song.is_favorite %}
-    <--
-    {% endif %}
-    <br>
+     <li>{{ song.song_title}}
+      {% if song.is_favorite %}
+        <--
+       {% endif %}
+    </li>
     {% endfor %}
-    <input type="submit" value="favorite">
 
-</form>
+</ul>
+
+{% endblock %}
